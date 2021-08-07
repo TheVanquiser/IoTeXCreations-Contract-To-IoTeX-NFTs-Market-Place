@@ -1842,9 +1842,11 @@ contract IoTeXCreations is Wrap, Ownable, Pausable, CloneFactory, WhitelistAdmin
 
 		uint256 fees = cards[erc1155Address][id].mintFee.add( cards[erc1155Address][id].controllerFee );
 
+        // wildcards and iotx passes disabled in clones
+        bool enableFees = fees > 0;
         
         if(!isCloned){
-            uint256 iotxBalance = IERC20(address(0x6fb3e0a217407efff7ca062d46c26e5d60a14d69)).balanceOf(msg.sender);
+            uint256 iotxBalance = IERC20(address(0x6fB3e0A217407EFFf7Ca062D46c26E5d60a14d69)).balanceOf(msg.sender);
             if(iotxBalance >= farmFeeMinimumIotx || needsPayment()){
                 enableFees = false;
                 fees = 0;
@@ -2073,7 +2075,7 @@ contract IoTeXCreations is Wrap, Ownable, Pausable, CloneFactory, WhitelistAdmin
 
 	    require(!isCloned, "Not callable from clone");
 
-	    uint256 iotxBalance = IERC20(address(0x6fb3e0a217407efff7ca062d46c26e5d60a14d69)).balanceOf(msg.sender);
+	    uint256 iotxBalance = IERC20(address(0x6fB3e0A217407EFFf7Ca062D46c26E5d60a14d69)).balanceOf(msg.sender);
 	    if(iotxBalance < farmFeeMinimumIotx && !needsPayment()){
 	        require(msg.value == farmFee, "Invalid farm fee");
 	    }
